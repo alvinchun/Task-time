@@ -5,11 +5,6 @@ const { MongoClient, ObjectID } = require("mongodb");
 const connectionURL = "mongodb://127.0.0.1:27017";
 const databaseName = "taks-time";
 
-const id = new ObjectID();
-// console.log(id.id.length);
-// console.log(id.getTimestamp());
-// console.log(id.toHexString().length);
-
 MongoClient.connect(
   connectionURL,
   { useNewUrlParser: true },
@@ -19,79 +14,73 @@ MongoClient.connect(
     }
 
     const db = client.db(databaseName);
+    // insert(One,Many), update(One,Many), delete(One,Many)
 
-    // db.collection("users").findOne(
-    //   { _id: new ObjectID("5d2e2fe018a5f00888c88b3b") },
-    //   (error, user) => {
-    //     if (error) {
-    //       return console.log("Unable to fetch");
+    // db.collection("users")
+    //   .insertOne({ name: "Alvin", age: "27" })
+    //   .then(result => {
+    //     console.log(result.ops);
+    //   })
+    //   .catch(error => {
+    //     console.log("Error", error);
+    //   });
+
+    // db.collection("users")
+    //   .updateOne(
+    //     {
+    //       _id: new ObjectID("5d2d7d4b289f2043c3585165")
+    //     },
+    //     {
+    //       $inc: {
+    //         age: 1
+    //       }
     //     }
+    //   )
+    //   .then(result => {
+    //     console.log(result);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
 
-    //     console.log(user);
-    //   }
-    // );
+    // db.collection("users")
+    //   .updateMany(
+    //     {
+    //       age: 30
+    //     },
+    //     {
+    //       $inc: {
+    //         age: 1
+    //       }
+    //     }
+    //   )
+    //   .then(result => {
+    //     console.log(result.modifiedCount);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
 
-    // db.collection("users").findOne(
-    //   {
-    //     _id: new ObjectID("5d2e2fe018a5f00888c88b3b")
-    //   },
-    //   (error, users) => {
-    //     console.log(users);
-    //   }
-    // );
-
-    db.collection("tasks")
-      .find({ completed: false })
-      .toArray((error, tasks) => {
-        console.log(tasks);
+    db.collection("users")
+      .deleteOne({
+        age: 36
+      })
+      .then(result => {
+        console.log(result);
+      })
+      .catch(error => {
+        console.log(error);
       });
 
-    // db.collection("users")
-    //   .find({ age: 27 })
-    //   .toArray((error, users) => {
-    //     console.log(users);
-    //   });
-
-    // db.collection("users")
-    //   .find({ age: 27 })
-    //   .count((error, count) => {
-    //     console.log(count);
-    //   });
-    // db.collection("users").insertOne(
-    //   {
-    //     _id: id,
-    //     name: "Frank",
-    //     age: 32
-    //   },
-    //   (error, result) => {
-    //     if (error) {
-    //       return console.log("Unable to insert user");
-    //     }
-    //     // ops = array of document
-    //     // console.log(result.ops);
-    //   }
-    // );
-
-    // db.collection("tasks").insertMany(
-    //   [
-    //     {
-    //       name: "Coding",
-    //       completed: false
-    //     },
-    //     {
-    //       name: "Grocery Shopping",
-    //       completed: false
-    //     },
-    //     {
-    //       name: "Work Out",
-    //       completed: false
-    //     }
-    //   ],
-    //   (error, result) => {
-    //     if (error) {
-    //       return console.log("Unable to insert documents!");
-    //     }
-    //   }
-    // );
+    db.collection("users")
+      .deleteMany({
+        age: 32
+      })
+      .then(result => {
+        console.log(result);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 );
